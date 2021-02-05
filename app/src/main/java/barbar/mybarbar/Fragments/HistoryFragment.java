@@ -32,8 +32,8 @@ public class HistoryFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         historyItems=new ArrayList<>();
         for (int i=1;i<6;i++)
-        historyItems.add(new HistoryItems("Pramod","9956118310","10/02/2021","","Pending","Hair Cut"));
-        historyItems.add(new HistoryItems("Himanshu","9956118310","10/02/2021","","Pending","Hair Cut"));
+        historyItems.add(new HistoryItems("Pramod","+919956118310","10/02/2021","","Pending","Hair Cut"));
+        historyItems.add(new HistoryItems("Himanshu","+919956118310","10/02/2021","","Pending","Hair Cut"));
         mAdapter=new HistoryAdopter(historyItems,getContext());
         recyclerView.setAdapter(mAdapter);
 

@@ -2,10 +2,13 @@ package barbar.mybarbar.HistoryAdopter;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,11 +36,18 @@ public class HistoryAdopter extends RecyclerView.Adapter<HistoryAdopter.HistoryV
 
     @Override
     public void onBindViewHolder(@NonNull HistoryViewHolder holder, int position) {
-        HistoryItems currentItems=items.get(position);
+        final HistoryItems currentItems=items.get(position);
         holder.name.setText(currentItems.getName());
         holder.phoneNumber.setText(currentItems.getPhoneNumber());
         holder.date.setText(currentItems.getDate());
-
+        holder.callMe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String phone = currentItems.getPhoneNumber();
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
+                context.startActivity(intent);
+            }
+        });
 
 
 
@@ -51,13 +61,15 @@ public class HistoryAdopter extends RecyclerView.Adapter<HistoryAdopter.HistoryV
     public class HistoryViewHolder extends RecyclerView.ViewHolder {
 
         private TextView name,phoneNumber,date,staus,barberType;
+        private Button callMe;
         public HistoryViewHolder(@NonNull View itemView) {
             super(itemView);
-            //datePicker=itemView.findViewById(R.id.date_picker);
+            callMe=itemView.findViewById(R.id.call_me);
             name=itemView.findViewById(R.id.name);
             phoneNumber=itemView.findViewById(R.id.phone_number);
             barberType=itemView.findViewById(R.id.barber_type);
             date=itemView.findViewById(R.id.date);
+
         }
     }
 }
