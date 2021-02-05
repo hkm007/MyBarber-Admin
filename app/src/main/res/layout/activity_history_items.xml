@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_marginTop="4dp"
-    android:layout_marginStart="2dp"
-    android:layout_marginEnd="2dp"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
     android:layout_height="wrap_content"
     tools:context="barbar.mybarbar.MainActivity">
 
@@ -15,13 +15,14 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:focusable="true"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="8dp">
+        app:cardCornerRadius="10dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Himanshu Bhai"
@@ -29,7 +30,9 @@
                 android:textSize="20dp"
                 android:textColor="@color/white"
                 android:padding="4dp"/>
+
             <TextView
+                android:id="@+id/phone_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="+91 9628742706"
@@ -37,34 +40,29 @@
                 android:paddingLeft="5dp"
                 android:textSize="18dp"/>
             <TextView
+                android:id="@+id/barber_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hair Cut Only"
                 android:paddingLeft="5dp"/>
             <TextView
+                android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2-Feb-2021"
                 android:paddingLeft="5dp"/>
             <TextView
-                android:layout_marginBottom="5dp"
+                android:id="@+id/status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10:30 AM"
                 android:paddingLeft="5dp"/>
 
+
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/dodger_blue"
-        android:layout_weight="1"
-        android:text="Contact Us"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="70dp"
-        android:layout_marginRight="30dp"
-        android:textAllCaps="false"
-        app:cornerRadius="6dp"/>
+
+
+
 
 </RelativeLayout>
