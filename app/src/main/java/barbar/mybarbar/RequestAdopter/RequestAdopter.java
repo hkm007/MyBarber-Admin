@@ -42,9 +42,10 @@ public class RequestAdopter extends RecyclerView.Adapter<RequestAdopter.RequestV
     @Override
     public void onBindViewHolder(@NonNull RequestViewHolder holder, final int position) {
         final RequestItems currentItem=requestItems.get(position);
-        holder.name.setText(currentItem.getName());
-        holder.phoneNumber.setText(currentItem.getPhoneNumber());
+        holder.name.setText(currentItem.getCustomerName());
+        holder.phoneNumber.setText(currentItem.getCustomerPhone());
         holder.date.setText(currentItem.getDate());
+        holder.barberType.setText(currentItem.getDescription());
 
 
 
@@ -109,6 +110,7 @@ public class RequestAdopter extends RecyclerView.Adapter<RequestAdopter.RequestV
             phoneNumber=itemView.findViewById(R.id.phone_number);
             barberType=itemView.findViewById(R.id.barber_type);
             date=itemView.findViewById(R.id.date);
+            barberType=itemView.findViewById(R.id.barber_type);
 
 
 

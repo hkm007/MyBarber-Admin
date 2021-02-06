@@ -1,31 +1,26 @@
 package barbar.mybarbar.HistoryAdopter;
 
 public class HistoryItems {
-    String name,phoneNumber,date,time,status,orderType;
+    String id, date, time, description, customerName, customerPhone;
+    boolean accepted, declined;
 
-    public HistoryItems(String name, String phoneNumber, String date, String time, String status, String orderType) {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
+    public HistoryItems(String id, String date, String time, String description, String customerName, String customerPhone, boolean accepted, boolean declined) {
+        this.id = id;
         this.date = date;
         this.time = time;
-        this.status = status;
-        this.orderType = orderType;
+        this.description = description;
+        this.customerName = customerName;
+        this.customerPhone = customerPhone;
+        this.accepted = accepted;
+        this.declined = declined;
     }
 
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDate() {
@@ -44,19 +39,43 @@ public class HistoryItems {
         this.time = time;
     }
 
-    public String getStatus() {
-        return status;
+    public String getDescription() {
+        return description;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getOrderType() {
-        return orderType;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setOrderType(String orderType) {
-        this.orderType = orderType;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
+
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
+    }
+
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
+    }
+
+    public boolean isDeclined() {
+        return declined;
+    }
+
+    public void setDeclined(boolean declined) {
+        this.declined = declined;
     }
 }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MobileAuthentication">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:layout_marginTop="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Enter your\nmobile number"
+            android:textColor="@color/white"
+            android:textSize="35sp"
+            android:textStyle="bold"> </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="20dp"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:text="We will send a OTP to Verify\nyour Mobile Number"
+            > </TextView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <com.rilixtech.widget.countrycodepicker.CountryCodePicker
+                android:id="@+id/ccp"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@android:color/background_light"
+                app:ccp_textColor="@color/colorAccent"
+                app:ccp_defaultCode="91"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/mobile_no"
+                android:layout_width="match_parent"
+                android:inputType="phone"
+                android:textSize="22sp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/orange_red"
+                android:hint="Enter Mobile number"
+                android:layout_marginEnd="30dp"
+                android:layout_marginLeft="30dp"
+                android:textStyle="bold"> </EditText>
+        </LinearLayout>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/continue_button"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:text="Continue"
+            android:padding="8dp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/orange"
+            android:textAllCaps="false"
+            android:layout_marginTop="30dp"
+            app:cornerRadius="10dp"
+            android:textSize="18sp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"> </com.google.android.material.button.MaterialButton>
+    </LinearLayout>
+
+
+</RelativeLayout>

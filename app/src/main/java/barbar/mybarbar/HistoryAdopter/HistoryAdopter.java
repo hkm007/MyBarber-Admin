@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -37,17 +38,27 @@ public class HistoryAdopter extends RecyclerView.Adapter<HistoryAdopter.HistoryV
     @Override
     public void onBindViewHolder(@NonNull HistoryViewHolder holder, int position) {
         final HistoryItems currentItems=items.get(position);
-        holder.name.setText(currentItems.getName());
-        holder.phoneNumber.setText(currentItems.getPhoneNumber());
+        holder.name.setText(currentItems.getCustomerName());
+        holder.phoneNumber.setText(currentItems.getCustomerPhone());
         holder.date.setText(currentItems.getDate());
         holder.callMe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String phone = currentItems.getPhoneNumber();
+                String phone = currentItems.getCustomerPhone();
                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
                 context.startActivity(intent);
             }
         });
+        if (currentItems.isAccepted()){
+            holder.staus.setText("Accepted");
+            holder.name.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.green_dot,0);
+            holder.staus.setBackground(ContextCompat.getDrawable(context, R.drawable.hollw_circle_background));
+        }
+        if (currentItems.isDeclined()){
+            holder.staus.setText("Declined");
+            holder.name.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.red_dot,0);
+            holder.staus.setBackground(ContextCompat.getDrawable(context, R.drawable.hollw_circle_red_background));
+        }
 
 
 
@@ -60,7 +71,7 @@ public class HistoryAdopter extends RecyclerView.Adapter<HistoryAdopter.HistoryV
 
     public class HistoryViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView name,phoneNumber,date,staus,barberType;
+        private TextView name,phoneNumber,date,staus,barberType,time;
         private Button callMe;
         public HistoryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,6 +80,8 @@ public class HistoryAdopter extends RecyclerView.Adapter<HistoryAdopter.HistoryV
             phoneNumber=itemView.findViewById(R.id.phone_number);
             barberType=itemView.findViewById(R.id.barber_type);
             date=itemView.findViewById(R.id.date);
+            time=itemView.findViewById(R.id.time);
+            staus=itemView.findViewById(R.id.status);
 
         }
     }
