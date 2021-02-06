@@ -10,31 +10,39 @@
         android:orientation="vertical"
         android:layout_height="match_parent">
 
-
-        <TextView
-            android:layout_marginTop="80dp"
+        <com.airbnb.lottie.LottieAnimationView
+                android:foregroundGravity="center"
+                android:id="@+id/walking_kid"
+                android:layout_below="@+id/logo"
+            android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                app:lottie_autoPlay="true"
+                app:lottie_rawRes="@raw/barber_shop"
+                app:lottie_loop="true"/>
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Enter your\nmobile number"
-            android:textColor="@color/white"
-            android:textSize="35sp"
-            android:textStyle="bold"> </TextView>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal"
+            android:drawableStart="@drawable/shop_name"
+            android:drawablePadding="8dp"
+            android:hint="Shop Name"
             android:layout_marginStart="20dp"
-            android:gravity="center"
-            android:textSize="16sp"
-            android:text="We will send a OTP to Verify\nyour Mobile Number"
-            > </TextView>
-
-        <View
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="20dp"
+            android:drawableLeft="@drawable/shop_name" />
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="50dp"/>
+            android:drawableStart="@drawable/owner_name"
+            android:drawablePadding="8dp"
+            android:layout_height="wrap_content"
+            android:hint="Owner Name"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:drawableLeft="@drawable/owner_name" />
+
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

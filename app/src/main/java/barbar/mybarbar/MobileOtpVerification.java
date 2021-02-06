@@ -90,6 +90,9 @@ public class MobileOtpVerification extends AppCompatActivity {
                 }
                 else {
                     // check correct otp entered?
+
+
+                    startActivity(new Intent(MobileOtpVerification.this,MainActivity.class));
                 }
             }
         });
@@ -104,18 +107,21 @@ public class MobileOtpVerification extends AppCompatActivity {
     }
 
     private void SendVerificationCode(String phoneN0) {
+        final String format="%02d:%02d";
         new CountDownTimer(5*60000, 1000) {
 
             @Override
             public void onTick(long l) {
-                resend.setText("" + l / 1000);
+                resend.setText(""+String.format(format,TimeUnit.MILLISECONDS.toMinutes(l),TimeUnit.MILLISECONDS.toSeconds(l)));
                 resend.setEnabled(false);
+
             }
 
             @Override
             public void onFinish() {
                 resend.setText("Resend");
                 resend.setEnabled(true);
+
             }
         }.start();
     }

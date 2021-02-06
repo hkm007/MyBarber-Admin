@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/upcoming"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:id="@+id/request"
+        android:icon="@drawable/request"
         android:title="Request" />
     <item
         android:id="@+id/history"
@@ -12,6 +12,6 @@
         android:title="History" />
     <item
         android:id="@+id/profile"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/user_profile"
         android:title="Profile" />
 </menu>

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -103,12 +104,14 @@ public class RequestFragment extends Fragment {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    //Toast.makeText(getContext(),"Something went wrong! Swipe to refresh",Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("err", error.toString());
+                Toast.makeText(getContext(),"Something went wrong! Swipe to refresh",Toast.LENGTH_LONG).show();
             }
         });
 

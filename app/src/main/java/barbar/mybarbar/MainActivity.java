@@ -11,6 +11,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import barbar.mybarbar.Fragments.HistoryFragment;
 import barbar.mybarbar.Fragments.ProfileFragment;
 import barbar.mybarbar.Fragments.RequestFragment;
+import me.ibrahimsn.lib.OnItemSelectedListener;
+import me.ibrahimsn.lib.SmoothBottomBar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,31 +20,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation_view);
+        SmoothBottomBar bottomNav = findViewById(R.id.bottom_navigation_view);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RequestFragment()).commit();
 
-        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+
+        bottomNav.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            public boolean onItemSelect(int i) {
                 Fragment fragment=null;
-                switch (item.getItemId()){
-                    case R.id.upcoming:
+                switch (i){
+                    case 0:
                         fragment=new RequestFragment();
                         break;
-                    case R.id.history:
+                    case 1:
                         fragment=new HistoryFragment();
                         break;
-                    case R.id.profile:
+                    case 2:
                         fragment=new ProfileFragment();
                         break;
-
                 }
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                if (fragment!=null)
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+
                 return true;
             }
         });
-
     }
 
 }
