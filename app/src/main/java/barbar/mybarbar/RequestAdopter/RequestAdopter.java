@@ -1,7 +1,11 @@
 package barbar.mybarbar.RequestAdopter;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +14,22 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,10 +38,16 @@ import java.util.Locale;
 
 import barbar.mybarbar.R;
 
+import static android.content.Context.MODE_PRIVATE;
+import static barbar.mybarbar.MobileAuthentication.SHARED_PREFS;
+import static barbar.mybarbar.MobileAuthentication.SHOP_ID;
+
 public class RequestAdopter extends RecyclerView.Adapter<RequestAdopter.RequestViewHolder> {
 
     private ArrayList<RequestItems> requestItems;
     private Context context;
+    ProgressDialog progressdialog;
+
 
     public RequestAdopter(ArrayList<RequestItems> requestItems, Context context) {
         this.requestItems = requestItems;
@@ -40,56 +62,135 @@ public class RequestAdopter extends RecyclerView.Adapter<RequestAdopter.RequestV
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RequestViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final RequestViewHolder holder, final int position) {
         final RequestItems currentItem=requestItems.get(position);
         holder.name.setText(currentItem.getCustomerName());
         holder.phoneNumber.setText(currentItem.getCustomerPhone());
         holder.date.setText(currentItem.getDate());
         holder.barberType.setText(currentItem.getDescription());
 
+        progressdialog = new ProgressDialog(context);
+        progressdialog.setMessage("Please Wait...");
+        progressdialog.setCanceledOnTouchOutside(false);
 
 
-        final Calendar myCalendar = Calendar.getInstance();
-        final DatePickerDialog.OnDateSetListener datePickerDialog = new DatePickerDialog.OnDateSetListener() {
 
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                String myFormat = "MM/dd/yy"; //In which you need put here
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                currentItem.setDate(sdf.format(myCalendar.getTime()));
-                Log.v("tag",sdf.format(myCalendar.getTime()));
-                notifyItemChanged(position);
-            }
-
-
-        };
-
-        holder.datePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new DatePickerDialog(context,datePickerDialog, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-
-            }
-        });
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        final String shopId=sharedPreferences.getString(SHOP_ID, "");
         holder.accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                new AlertDialog.Builder(context)
+                        .setTitle("Accept Request")
+                        .setMessage("Are you sure you want to accept this request?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                progressdialog.show();
+                                AcceptRequest(position,shopId,currentItem.getId());
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
 
             }
         });
         holder.decline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                new AlertDialog.Builder(context)
+                        .setTitle("Decline Request")
+                        .setMessage("Are you sure you want to decline this request?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                progressdialog.show();
+                                DeclineRequest(position,shopId,currentItem.getId());
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
+
+
 
             }
         });
+    }
+
+    private void DeclineRequest(final int position, String shopId, String id) {
+        String url = "https://mybarber.herokuapp.com/shop/api/appointment/decline/"+shopId+"/"+id;
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        JsonObjectRequest putRequest = new JsonObjectRequest(Request.Method.PUT, url, null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Log.d("msg", response.getString("msg"));
+                            progressdialog.dismiss();
+                            requestItems.remove(position);
+                            notifyItemRemoved(position);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        );
+
+        queue.add(putRequest);
+    }
+
+    private void AcceptRequest(final int position, String shopId, String currentId) {
+        String url = "https://mybarber.herokuapp.com/shop/api/appointment/accept/"+shopId+"/"+currentId;
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        JsonObjectRequest putRequest = new JsonObjectRequest(Request.Method.PUT, url, null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Log.d("msg", response.getString("msg"));
+                            progressdialog.dismiss();
+                            requestItems.remove(position);
+                            notifyItemRemoved(position);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        );
+
+        queue.add(putRequest);
+
     }
 
     @Override
@@ -98,12 +199,12 @@ public class RequestAdopter extends RecyclerView.Adapter<RequestAdopter.RequestV
     }
 
     public static class RequestViewHolder extends RecyclerView.ViewHolder {
-        private ImageView datePicker;
-        private Button timePicker,accept,decline;
+        private ImageView timePicker;
+        private Button accept,decline;
         private TextView name,phoneNumber,date,time,barberType;
         public RequestViewHolder(@NonNull View itemView) {
             super(itemView);
-            datePicker=itemView.findViewById(R.id.date_picker);
+            timePicker=itemView.findViewById(R.id.date_picker);
             accept=itemView.findViewById(R.id.accept);
             decline=itemView.findViewById(R.id.decline);
             name=itemView.findViewById(R.id.name);
@@ -111,6 +212,7 @@ public class RequestAdopter extends RecyclerView.Adapter<RequestAdopter.RequestV
             barberType=itemView.findViewById(R.id.barber_type);
             date=itemView.findViewById(R.id.date);
             barberType=itemView.findViewById(R.id.barber_type);
+
 
 
 

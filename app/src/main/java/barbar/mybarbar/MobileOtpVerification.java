@@ -12,13 +12,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.stfalcon.smsverifycatcher.OnSmsCatchListener;
-import com.stfalcon.smsverifycatcher.SmsVerifyCatcher;
-
-import java.security.SecureRandom;
-import java.util.HashMap;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,11 +24,8 @@ public class MobileOtpVerification extends AppCompatActivity {
     private TextView next,resend;
     final static String PHONE="phone";
     final static String CUNTERYCODE="cc";
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String TEXT = "text";
     private ProgressBar progressBar;
     private OtpTextView otpTextView;
-    private SmsVerifyCatcher smsVerifyCatcher;
     String otp="";
     String phoneN0=null,referralCode=null;
 
@@ -54,14 +44,7 @@ public class MobileOtpVerification extends AppCompatActivity {
 
         SendVerificationCode(phoneN0);
 
-        smsVerifyCatcher = new SmsVerifyCatcher(this, new OnSmsCatchListener<String>() {
-            @Override
-            public void onSmsCatch(String message) {
-                String code = parseCode(message);//Parse verification code
-                otpTextView.setOTP(code);//set code in edit text
-                //then you can send verification code to server
-            }
-        });
+
         otpTextView.setOtpListener(new OTPListener() {
             @Override
             public void onInteractionListener() {
@@ -125,23 +108,7 @@ public class MobileOtpVerification extends AppCompatActivity {
             }
         }.start();
     }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        smsVerifyCatcher.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        smsVerifyCatcher.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        smsVerifyCatcher.onStop();
-    }
     public String parseCode(String message) {
         Pattern p = Pattern.compile("\\b\\d{6}\\b");
         Matcher m = p.matcher(message);
@@ -151,16 +118,6 @@ public class MobileOtpVerification extends AppCompatActivity {
         }
         return code;
     }
-    public void saveData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(TEXT, "");
-        editor.apply();
-        Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
-    }
-    public void loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String text = sharedPreferences.getString(TEXT, "");
-    }
+
 
 }

@@ -26,6 +26,14 @@
         android:scrollbars="horizontal"
         android:layout_height="20dp"
         android:indeterminate="true" />
+    <TextView
+        android:id="@+id/empty_message"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Oh! You doesn't have any request"
+        android:textSize="16sp"/>
 </RelativeLayout>
 
 

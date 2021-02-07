@@ -21,6 +21,7 @@
                 app:lottie_rawRes="@raw/barber_shop"
                 app:lottie_loop="true"/>
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/shop_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/shop_name"
@@ -31,6 +32,7 @@
             android:layout_marginEnd="20dp"
             android:drawableLeft="@drawable/shop_name" />
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/owner_name"
             android:layout_width="match_parent"
             android:drawableStart="@drawable/owner_name"
             android:drawablePadding="8dp"
@@ -39,7 +41,16 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:drawableLeft="@drawable/owner_name" />
-
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:drawableStart="@drawable/owner_name"
+            android:drawablePadding="8dp"
+            android:layout_height="wrap_content"
+            android:hint="Address"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:drawableLeft="@drawable/owner_name" />
 
 
 
@@ -70,7 +81,8 @@
                 android:hint="Enter Mobile number"
                 android:layout_marginEnd="30dp"
                 android:layout_marginLeft="30dp"
-                android:textStyle="bold"> </EditText>
+                android:textStyle="bold"
+                android:layout_marginRight="30dp"> </EditText>
         </LinearLayout>
 
 

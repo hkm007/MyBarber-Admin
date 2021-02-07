@@ -1,5 +1,6 @@
 package barbar.mybarbar.Fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -32,6 +34,11 @@ import barbar.mybarbar.RequestAdopter.RequestItems;
 
 import java.util.ArrayList;
 
+import static android.content.Context.MODE_PRIVATE;
+import static barbar.mybarbar.MobileAuthentication.SHARED_PREFS;
+import static barbar.mybarbar.MobileAuthentication.SHOP_ID;
+import static barbar.mybarbar.MobileAuthentication.TEXT;
+
 public class RequestFragment extends Fragment {
 
     private RecyclerView recyclerView;
@@ -39,6 +46,7 @@ public class RequestFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ProgressBar progressBar;
+    private TextView emptyMessage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,10 +55,13 @@ public class RequestFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_request, container, false);
         recyclerView=view.findViewById(R.id.recyclerView);
         progressBar=view.findViewById(R.id.progressbar);
+        emptyMessage=view.findViewById(R.id.empty_message);
+
+
         progressBar.setVisibility(View.VISIBLE);
         swipeRefreshLayout=view.findViewById(R.id.swipe_refresh);
 
-
+        loadData();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         loadApiData(view);
@@ -70,13 +81,15 @@ public class RequestFragment extends Fragment {
         return view;
     }
 
-    private void loadApiData(View view) {
+    private void loadApiData(final View view) {
         requestItems=new ArrayList<>();
         RequestQueue requestQueue;
         requestQueue = Volley.newRequestQueue(getContext());
 
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        String shopID = sharedPreferences.getString(SHOP_ID, "");
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                "http://mybarber.herokuapp.com/shop/api/appointment/new/601a6fb155502621b4ace7f6", null, new Response.Listener<JSONObject>() {
+                "http://mybarber.herokuapp.com/shop/api/appointment/new/"+shopID, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -96,6 +109,8 @@ public class RequestFragment extends Fragment {
 
                         requestItems.add(new RequestItems(id, date, time, description, customerName, customerPhone, accepted, declined));
                     }
+                    if (data.length()==0)
+                        emptyMessage.setVisibility(View.VISIBLE);
                     mAdapter=new RequestAdopter(requestItems,getContext());
                     recyclerView.setAdapter(mAdapter);
                     progressBar.setVisibility(View.GONE);
@@ -111,7 +126,9 @@ public class RequestFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("err", error.toString());
-                Toast.makeText(getContext(),"Something went wrong! Swipe to refresh",Toast.LENGTH_LONG).show();
+                loadApiData(view);
+                //progressBar.setVisibility(View.GONE);
+                Toast.makeText(getContext(),"Please wait working on it",Toast.LENGTH_LONG).show();
             }
         });
 
@@ -119,6 +136,11 @@ public class RequestFragment extends Fragment {
         requestQueue.add(jsonObjectRequest);
 
 
+    }
+    public void loadData() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        String text = sharedPreferences.getString(SHOP_ID, "");
+        Log.v("tag",text);
     }
 
 }

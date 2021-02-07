@@ -41,6 +41,7 @@ public class HistoryAdopter extends RecyclerView.Adapter<HistoryAdopter.HistoryV
         holder.name.setText(currentItems.getCustomerName());
         holder.phoneNumber.setText(currentItems.getCustomerPhone());
         holder.date.setText(currentItems.getDate());
+        holder.time.setText(currentItems.getTime());
         holder.callMe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
