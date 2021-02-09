@@ -65,15 +65,15 @@ public class MobileAuthentication extends AppCompatActivity {
         continue_no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ProgressDialog progressdialog = new ProgressDialog(getApplicationContext());
-                progressdialog.setMessage("Creating Shop....");
-                progressdialog.setCanceledOnTouchOutside(false);
-                progressdialog.show();
+
                 if (phoneNo.getText().toString().isEmpty()||!ValidatedData()){
                     Toast.makeText(MobileAuthentication.this,"Plese fill all places",Toast.LENGTH_LONG).show();
                 }
                 else {
-
+                    final ProgressDialog progressdialog = new ProgressDialog(MobileAuthentication.this);
+                    progressdialog.setMessage("Creating Shop....");
+                    progressdialog.setCanceledOnTouchOutside(false);
+                    progressdialog.show();
 
                     String postUrl = "https://mybarber.herokuapp.com/shop/api/new";
                     RequestQueue requestQueue = Volley.newRequestQueue(MobileAuthentication.this);
@@ -82,7 +82,7 @@ public class MobileAuthentication extends AppCompatActivity {
                     try {
                         postData.put("name",shopName.getText().toString());
                         postData.put("owner", ownerName.getText().toString());
-                        postData.put("phone", phoneNo.getText().toString());
+                        postData.put("phone", ccp.getSelectedCountryCodeWithPlus()+phoneNo.getText().toString());
                         postData.put("address", address.getText().toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -124,7 +124,8 @@ public class MobileAuthentication extends AppCompatActivity {
                         public void onErrorResponse(VolleyError error) {
                             error.printStackTrace();
                             Log.d("err", error.toString());
-                            Toast.makeText(MobileAuthentication.this,"Something went wrong! Swipe to refresh",Toast.LENGTH_LONG).show();
+                            Toast.makeText(MobileAuthentication.this,"Try Again",Toast.LENGTH_LONG).show();
+                            progressdialog.dismiss();
                         }
                     });
 

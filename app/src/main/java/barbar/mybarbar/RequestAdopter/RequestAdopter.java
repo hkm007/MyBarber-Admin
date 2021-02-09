@@ -47,11 +47,13 @@ public class RequestAdopter extends RecyclerView.Adapter<RequestAdopter.RequestV
     private ArrayList<RequestItems> requestItems;
     private Context context;
     ProgressDialog progressdialog;
+    private TextView emptyMessage;
 
 
-    public RequestAdopter(ArrayList<RequestItems> requestItems, Context context) {
+    public RequestAdopter(ArrayList<RequestItems> requestItems, Context context,TextView emptyMessage) {
         this.requestItems = requestItems;
         this.context = context;
+        this.emptyMessage=emptyMessage;
     }
 
     @NonNull
@@ -68,7 +70,7 @@ public class RequestAdopter extends RecyclerView.Adapter<RequestAdopter.RequestV
         holder.phoneNumber.setText(currentItem.getCustomerPhone());
         holder.date.setText(currentItem.getDate());
         holder.barberType.setText(currentItem.getDescription());
-
+        holder.time.setText(currentItem.getTime());
         progressdialog = new ProgressDialog(context);
         progressdialog.setMessage("Please Wait...");
         progressdialog.setCanceledOnTouchOutside(false);
@@ -137,7 +139,10 @@ public class RequestAdopter extends RecyclerView.Adapter<RequestAdopter.RequestV
                             progressdialog.dismiss();
                             requestItems.remove(position);
                             notifyItemRemoved(position);
-
+                            notifyItemChanged(position);
+                            notifyItemRangeChanged(position, requestItems.size());
+                            if (getItemCount()==1)
+                                emptyMessage.setVisibility(View.VISIBLE);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -172,6 +177,8 @@ public class RequestAdopter extends RecyclerView.Adapter<RequestAdopter.RequestV
                             progressdialog.dismiss();
                             requestItems.remove(position);
                             notifyItemRemoved(position);
+                            if (getItemCount()==1)
+                                emptyMessage.setVisibility(View.VISIBLE);
 
 
                         } catch (JSONException e) {
@@ -199,12 +206,12 @@ public class RequestAdopter extends RecyclerView.Adapter<RequestAdopter.RequestV
     }
 
     public static class RequestViewHolder extends RecyclerView.ViewHolder {
-        private ImageView timePicker;
+
         private Button accept,decline;
         private TextView name,phoneNumber,date,time,barberType;
         public RequestViewHolder(@NonNull View itemView) {
             super(itemView);
-            timePicker=itemView.findViewById(R.id.date_picker);
+            time=itemView.findViewById(R.id.time);
             accept=itemView.findViewById(R.id.accept);
             decline=itemView.findViewById(R.id.decline);
             name=itemView.findViewById(R.id.name);

@@ -3,4 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="don_t_recive_the_otp_code">Don\'t recive the otp code</string>
+    <string name="add_name">Add Name</string>
+    <string name="add_bio">Add Bio</string>
+    <string name="loading">Loading</string>
 </resources>

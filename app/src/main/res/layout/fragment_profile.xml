@@ -38,7 +38,9 @@
                     android:layout_marginEnd="10dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="160dp"
-                    android:src="@drawable/camera"/>
+                    android:src="@drawable/camera"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true" />
                 <com.google.android.material.circularreveal.cardview.CircularRevealCardView
                     android:id="@+id/profile_card"
                     android:layout_width="120dp"
@@ -70,7 +72,9 @@
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentBottom="true"
                             android:layout_marginBottom="10dp"
-                            android:layout_marginEnd="10dp">
+                            android:layout_marginEnd="10dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="10dp">
                             <ImageView
                                 android:id="@+id/edit_profile"
                                 android:padding="5dp"
@@ -90,23 +94,25 @@
                     android:gravity="end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Add Name"
+                    android:visibility="invisible"
+                    android:text="@string/add_name"
                     android:layout_centerHorizontal="true"
                     android:background="@null"
                     android:inputType="text|textNoSuggestions"
                     android:padding="4dp"
-                    android:textSize="20dp"/>
+                    android:textSize="20sp"/>
 
                 <EditText
                     android:layout_below="@id/name"
                     android:id="@+id/bio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Add Bio"
+                    android:text="@string/add_bio"
                     android:layout_centerHorizontal="true"
                     android:background="@null"
                     android:inputType="text|textNoSuggestions"
-                    android:textSize="16dp"
+                    android:visibility="invisible"
+                    android:textSize="16sp"
                     android:layout_marginTop="0dp"/>
 
             </RelativeLayout>
@@ -125,43 +131,46 @@
                         android:id="@+id/shop_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Amrendra Barber Shop"
+                        android:text="@string/loading"
                         android:layout_gravity="center"
                         android:textStyle="bold"
                         android:textColor="@color/white"
                         android:gravity="center"
                         android:padding="8dp"
-                        android:textSize="22dp"/>
+                        android:textSize="22sp"/>
                     <TextView
                         android:id="@+id/owner_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Loading... "
+                        android:text="@string/loading"
                         android:layout_gravity="start"
                         android:gravity="center"
                         android:layout_marginStart="10dp"
                         android:padding="8dp"
-                        android:textSize="18dp"/>
+                        android:textSize="18dp"
+                        android:layout_marginLeft="10dp" />
                     <TextView
                         android:id="@+id/phone_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Loading.."
+                        android:text="@string/loading"
                         android:layout_gravity="start"
                         android:gravity="center"
                         android:layout_marginStart="10dp"
                         android:padding="8dp"
-                        android:textSize="18dp"/>
+                        android:textSize="18dp"
+                        android:layout_marginLeft="10dp" />
                     <TextView
                         android:id="@+id/address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:text="Loading..."
+                        android:text="@string/loading"
                         android:gravity="center"
                         android:layout_marginStart="10dp"
                         android:padding="8dp"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        android:layout_marginLeft="10dp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -171,7 +180,8 @@
                         android:visibility="gone"
                         android:layout_marginStart="10dp"
                         android:padding="8dp"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        android:layout_marginLeft="10dp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>

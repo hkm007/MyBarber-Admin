@@ -124,7 +124,7 @@ public class HistoryFragment extends Fragment {
                 Log.d("err", error.toString());
                 //progressBar.setVisibility(View.GONE);
                 loadApiData(view);
-                Toast.makeText(getContext(),"Please wait working on it :)",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"Please wait still loading.. :)",Toast.LENGTH_LONG).show();
             }
         });
 

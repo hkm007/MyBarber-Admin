@@ -111,7 +111,7 @@ public class RequestFragment extends Fragment {
                     }
                     if (data.length()==0)
                         emptyMessage.setVisibility(View.VISIBLE);
-                    mAdapter=new RequestAdopter(requestItems,getContext());
+                    mAdapter=new RequestAdopter(requestItems,getContext(),emptyMessage);
                     recyclerView.setAdapter(mAdapter);
                     progressBar.setVisibility(View.GONE);
                     swipeRefreshLayout.setRefreshing(false);
