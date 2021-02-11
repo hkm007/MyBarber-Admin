@@ -1,6 +1,8 @@
 package barbar.mybarbar.Fragments;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -41,7 +43,15 @@ public class ProfileFragment extends Fragment {
         address.setText(sharedPreferences.getString(ADDRESS,""));
         phoneNumber.setText(sharedPreferences.getString(PHONE_NO,""));
 
-
+        view.findViewById(R.id.privacy_policy).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url="https://docs.google.com/document/d/1GkUXzch9E-bzol32sdudmxR_0xhWdwBnQAjKzopjxJ4/edit?usp=sharing";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
 
 
 

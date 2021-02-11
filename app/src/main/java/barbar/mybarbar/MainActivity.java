@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import barbar.mybarbar.Fragments.HistoryFragment;
 import barbar.mybarbar.Fragments.ProfileFragment;
@@ -16,10 +19,12 @@ import me.ibrahimsn.lib.SmoothBottomBar;
 
 public class MainActivity extends AppCompatActivity {
 
+    AdView mAdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        bannerAd();
         SmoothBottomBar bottomNav = findViewById(R.id.bottom_navigation_view);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RequestFragment()).commit();
@@ -49,6 +54,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void bannerAd() {
+        mAdView=findViewById(R.id.adView);
+        MobileAds.initialize(MainActivity.this);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();

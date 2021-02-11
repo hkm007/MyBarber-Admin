@@ -141,7 +141,7 @@ public class RequestAdopter extends RecyclerView.Adapter<RequestAdopter.RequestV
                             notifyItemRemoved(position);
                             notifyItemChanged(position);
                             notifyItemRangeChanged(position, requestItems.size());
-                            if (getItemCount()==1)
+                            if (getItemCount()==0)
                                 emptyMessage.setVisibility(View.VISIBLE);
 
                         } catch (JSONException e) {
@@ -177,7 +177,7 @@ public class RequestAdopter extends RecyclerView.Adapter<RequestAdopter.RequestV
                             progressdialog.dismiss();
                             requestItems.remove(position);
                             notifyItemRemoved(position);
-                            if (getItemCount()==1)
+                            if (getItemCount()==0)
                                 emptyMessage.setVisibility(View.VISIBLE);
 
 
